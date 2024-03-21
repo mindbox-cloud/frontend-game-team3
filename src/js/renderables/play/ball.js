@@ -5,11 +5,15 @@ import {
   game,
   input,
   loader,
-  Math,
+  Math as MelonMath,
   Vector2d,
 } from "melonjs";
-import { BALL_SIZE } from "../../constants/constants.js";
+import { BALL_SIZE, COLORS } from "../../../constants/constants.js";
+import { reflectVector } from "../../vectormath.js";
 
+const TopBound = new Vector2d(0, -1);
+const LeftBound = new Vector2d(1, 0);
+const RightBound = new Vector2d(-1, 0);
 class BallEntity extends Entity {
   /**
    * constructor
@@ -60,15 +64,33 @@ class BallEntity extends Entity {
     this.pos.x = Math.clamp(this.pos.x, this.minX, this.maxX);
     this.pos.y = Math.clamp(this.pos.y, this.minY, this.maxY);
 
+    const vel = this.vel.normalize().scale(this.speed);
+    this.pos.x += this.vel.x;
+    this.pos.y += this.vel.y;
+
+    if (this.pos.x < this.minX) {
+      this.vel = reflectVector(this.vel, LeftBound);
+    }
+    if (this.pos.x > this.maxX) {
+      this.vel = reflectVector(this.vel, RightBound);
+    }
+    if (this.pos.y < this.minY) {
+      // increase difficulty
+      this.speed += 0.1;
+      this.vel = reflectVector(this.vel, TopBound);
+    }
+    if (this.pos.y > this.maxY) {
+      this.ancestor.removeChild(this);
+    }
+
+    this.pos.x = MelonMath.clamp(this.pos.x, this.minX, this.maxX);
+    this.pos.y = MelonMath.clamp(this.pos.y, this.minY, this.maxY);
+
     return true;
   }
 
   draw(renderer, viewport) {
-    renderer.setColor("red");
-    // renderer.fillEllipse(
-    //     this.width / 2, this.height / 2,
-    //     this.width / 2, this.height / 2,
-    // );
+    renderer.setColor(COLORS[15]);
     renderer.fill(this.body.shapes[0]);
   }
 
@@ -79,22 +101,22 @@ class BallEntity extends Entity {
   onCollision(response, other) {
     switch (response.b.body.collisionType) {
       case collision.types.PLAYER_OBJECT:
-        const vel = new Vector2d(this.dx, this.dy);
-        // invert y
-        vel.y = -vel.y;
+        const vel = this.vel.clone();
+        // direct Y up
+        vel.y = -Math.abs(vel.y);
         // modify x
         const ax = response.a.pos.x + response.a.width / 2;
         const bx = response.b.pos.x + response.b.width / 2;
         const hitPosition = (ax - bx) / response.b.width;
         vel.x = this.speed * hitPosition * 4;
         // clamp
-        this.dx = (vel.x * this.speed) / vel.length();
-        this.dy = (vel.y * this.speed) / vel.length();
+        this.vel.setV(vel).normalize();
         return false;
       case collision.types.ENEMY_OBJECT:
+        return true;
+      default:
         return false;
     }
-    return false;
   }
 }
 
