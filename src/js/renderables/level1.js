@@ -19,6 +19,7 @@ class Level1Entity extends Entity {
     let image = { width: 50, height: 50 };
 
     super(x, y, { width: image.width, height: image.height });
+    this.anchorPoint.set(0, 0);
 
     this.collisionType = collision.types.ENEMY_OBJECT;
 
