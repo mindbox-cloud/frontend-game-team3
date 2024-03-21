@@ -81,8 +81,11 @@ class BallEntity extends Entity {
                 const hitPosition = (ax - bx) / response.b.width;
                 vel.x = this.speed * hitPosition * 4;
                 // clamp
-                this.dx = vel.x * this.speed / vel.length();
+                this.dx = vel.x * this.speed / vel.length() * hitPosition*7;
                 this.dy = vel.y * this.speed / vel.length();
+                if (this.dy > -0.5) {
+                    this.dy = -0.5;
+                }
                 return false;
             case collision.types.ENEMY_OBJECT:
                 return false;
