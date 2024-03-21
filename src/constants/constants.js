@@ -23,8 +23,8 @@ export const COLORS = [
 
 export const BRICK_KINDS = [
   { color: COLORS[2], hp: 1 },
-  { color: COLORS[3], hp: 2 },
-  { color: COLORS[5], hp: 4 },
-  { color: COLORS[8], hp: 1000 },
-  { color: COLORS[10], hp: 2000 },
+  { color: COLORS[3], hp: 4 },
+  { color: COLORS[5], hp: 2 },
+  { color: COLORS[8], hp: 1 },
+  { color: COLORS[10], hp: 1 },
 ];

@@ -7,8 +7,9 @@ class BlockEntity extends Entity {
    */
   color = "red";
   isAlive = true;
+  hp = 1;
 
-  constructor(x, y, { color, id }) {
+  constructor(x, y, { color, id, hp }) {
     // call the parent constructor
     let image = { width: BLOCK_SIZE[0], height: BLOCK_SIZE[1] };
 
@@ -22,6 +23,7 @@ class BlockEntity extends Entity {
     this.alwaysUpdate = false;
     this.body.collisionType = collision.types.ENEMY_OBJECT;
     this.name = `${id}enemy`;
+    this.hp = hp;
   }
 
   draw(renderer) {
@@ -38,21 +40,30 @@ class BlockEntity extends Entity {
     return true;
   }
 
+  _hurt(dmg) {
+    this.hp -= dmg;
+    if (this.hp <= 0) {
+      audio.play("explosion", false, null, 0.4);
+      game.world.removeChild(this);
+      this.isAlive = false;
+      const blocks = game.world.children.filter((child) =>
+          child.name.includes("enemy")
+      );
+
+      if (blocks.length === 0 || (blocks.length === 1 && !blocks[0].isAlive))
+        state.change(state.GAME_END, true);
+    } else {
+      audio.play("click1", false, null, 0.4);
+    }
+  }
+
   /**
    * colision handler
    * (called when colliding with other objects)
    */
   onCollision(response, other) {
     if (response.b.body.collisionType === collision.types.PROJECTILE_OBJECT) {
-      audio.play("explosion", false, null, 0.4);
-      game.world.removeChild(this);
-      this.isAlive = false;
-      const blocks = game.world.children.filter((child) =>
-        child.name.includes("enemy")
-      );
-
-      if (blocks.length === 0 || (blocks.length === 1 && !blocks[0].isAlive))
-        state.change(state.GAME_END, true);
+      this._hurt(1);
       return false;
     }
     return false;

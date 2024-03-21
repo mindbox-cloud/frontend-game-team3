@@ -30,6 +30,18 @@ const DataManifest = [
     src: "./data/sfx/",
     channel: 2,
   },
+  {
+    name: "click1",
+    type: "audio",
+    src: "./data/sfx/",
+    channel: 2,
+  },
+  {
+    name: "click5",
+    type: "audio",
+    src: "./data/sfx/",
+    channel: 2,
+  },
 ];
 
 export default DataManifest;

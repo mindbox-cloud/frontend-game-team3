@@ -26,7 +26,7 @@ export const generateLevel = () => {
     for (let col = 1; col <= COLS; col++) {
       left += LEFT;
       blocks.push(
-        new BlockEntity(left, top, { id: ++id, color: BRICK_KINDS[row].color })
+        new BlockEntity(left, top, { id: ++id, color: BRICK_KINDS[row].color, hp: BRICK_KINDS[row].hp })
       );
       if (col < COLS) left += GAP;
     }
