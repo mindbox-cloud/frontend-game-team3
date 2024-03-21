@@ -21,7 +21,7 @@ import DataManifest from "./manifest.js";
 device.onReady(() => {
 
     // initialize the display canvas once the device/browser is ready
-    if (!video.init(1218, 562, { parent: "screen", scale: "auto" })) {
+    if (!video.init(800, 600, { parent: "screen", scale: "auto" })) {
         alert("Your browser does not support HTML5 canvas.");
         return;
     }
@@ -38,7 +38,7 @@ device.onReady(() => {
     audio.init("mp3,ogg");
 
     // allow cross-origin for image/texture loading
-    loader.crossOrigin = "anonymous";
+    // loader.crossOrigin = "anonymous";
 
     // set and load all resources.
     loader.preload(DataManifest, function () {
@@ -50,6 +50,6 @@ device.onReady(() => {
         pool.register("mainPlayer", PlayerEntity);
 
         // Start the game.
-        state.change(state.PLAY);
+        state.change(state.PLAY, true);
     });
 });

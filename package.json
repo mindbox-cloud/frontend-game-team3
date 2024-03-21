@@ -6,11 +6,12 @@
   "author": "Olivier Biot",
   "license": "MIT",
   "devDependencies": {
+    "sass": "^1.70.0",
+    "typescript": "^5.4.2",
     "vite": "^5.0.12",
     "vite-plugin-favicons-inject": "^2.2.0",
     "vite-plugin-html": "^3.2.2",
-    "vite-plugin-static-copy": "^1.0.1",
-    "sass": "^1.70.0"
+    "vite-plugin-static-copy": "^1.0.1"
   },
   "browserslist": "defaults",
   "scripts": {
@@ -20,6 +21,6 @@
   },
   "dependencies": {
     "@melonjs/debug-plugin": "^14.8.2",
-    "melonjs": "^16.0.0"
+    "melonjs": "^17.0.0"
   }
 }
