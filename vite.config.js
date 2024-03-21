@@ -8,7 +8,7 @@ export default defineConfig({
     assetsDir: "assets",
     emptyOutDir: true,
     manifest: true,
-    outDir: "public",
+    outDir: "docs",
     target: "es2015",
   },
   plugins: [
