@@ -17,7 +17,7 @@ class BlockEntity extends Entity {
    */
   constructor(x, y) {
     // call the parent constructor
-    let image = { width: 50, height: 25 };
+    let image = { width: BLOCK_SIZE[0], height: BLOCK_SIZE[1] };
 
     super(x, y, {
       width: image.width,
@@ -27,16 +27,7 @@ class BlockEntity extends Entity {
 
     this.alwaysUpdate = false;
     this.body.collisionType = collision.types.ENEMY_OBJECT;
-    this.speed = 4;
-    this.dx = this.speed;
-    this.dy = this.speed;
     this.name = "enemy";
-    this.velx = 250;
-
-    input.bindKey(input.KEY.LEFT, "left");
-    input.bindKey(input.KEY.UP, "up");
-    input.bindKey(input.KEY.DOWN, "down");
-    input.bindKey(input.KEY.RIGHT, "right");
   }
 
   draw(renderer) {
@@ -49,22 +40,6 @@ class BlockEntity extends Entity {
    */
   update(dt) {
     super.update(dt);
-
-    if (input.isKeyPressed("left")) {
-      this.pos.x -= (this.velx * dt) / 1000;
-    }
-
-    if (input.isKeyPressed("right")) {
-      this.pos.x += (this.velx * dt) / 1000;
-    }
-
-    if (input.isKeyPressed("up")) {
-      this.pos.y -= (this.velx * dt) / 1000;
-    }
-
-    if (input.isKeyPressed("down")) {
-      this.pos.y += (this.velx * dt) / 1000;
-    }
 
     return true;
   }
