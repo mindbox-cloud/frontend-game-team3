@@ -1,14 +1,4 @@
-import {
-  collision,
-  Entity,
-  Renderable,
-  game,
-  input,
-  loader,
-  Math,
-  Vector2d,
-  Rect,
-} from "melonjs";
+import { collision, Entity, game, Rect, audio } from "melonjs";
 import { BLOCK_SIZE } from "../../constants/constants";
 
 class BlockEntity extends Entity {
@@ -53,6 +43,7 @@ class BlockEntity extends Entity {
    */
   onCollision(response, other) {
     if (response.b.body.collisionType === collision.types.PROJECTILE_OBJECT) {
+      audio.play("explosion");
       game.world.removeChild(this);
       return false;
     }
