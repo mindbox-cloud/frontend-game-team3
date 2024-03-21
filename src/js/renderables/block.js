@@ -15,7 +15,9 @@ class BlockEntity extends Entity {
   /**
    * constructor
    */
-  constructor(x, y) {
+  color = "red";
+
+  constructor(x, y, { color, id }) {
     // call the parent constructor
     let image = { width: BLOCK_SIZE[0], height: BLOCK_SIZE[1] };
 
@@ -25,13 +27,14 @@ class BlockEntity extends Entity {
       shapes: [new Rect(0, 0, BLOCK_SIZE[0], BLOCK_SIZE[1])],
     });
 
+    this.color = color;
     this.alwaysUpdate = false;
     this.body.collisionType = collision.types.ENEMY_OBJECT;
-    this.name = "enemy";
+    this.name = `${id}enemy`;
   }
 
   draw(renderer) {
-    renderer.setColor("red");
+    renderer.setColor(this.color);
     renderer.fill(this.body.shapes[0]);
   }
 
@@ -49,11 +52,11 @@ class BlockEntity extends Entity {
    * (called when colliding with other objects)
    */
   onCollision(response, other) {
-    if (response.b.body.collisionType === collision.types.PLAYER_OBJECT) {
+    if (response.b.body.collisionType === collision.types.PROJECTILE_OBJECT) {
       game.world.removeChild(this);
       return false;
     }
-    return true;
+    return false;
   }
 }
 

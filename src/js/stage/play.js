@@ -11,6 +11,7 @@ import Player from "../renderables/player.js";
 import BallEntity from "../renderables/ball.js";
 import ScreenBoundsEntity from "../renderables/screenBounds.js";
 import BlockEntity from "../renderables/block.js";
+import { generateLevel } from "../levelGenerator.js";
 
 class PlayScreen extends Stage {
   /**
@@ -23,7 +24,7 @@ class PlayScreen extends Stage {
     game.world.addChild(new BallEntity(300, 300, {}));
     // game.world.addChild(new ScreenBoundsEntity());
 
-    game.world.addChild(new BlockEntity(100, 100, {}));
+    generateLevel();
 
     game.world.gravity = new Vector2d(0, 0);
 
