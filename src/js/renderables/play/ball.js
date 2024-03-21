@@ -10,6 +10,10 @@ import {
 import { BALL_SIZE, COLORS } from "../../../constants/constants.js";
 import { reflectVector } from "../../vectormath.js";
 
+function within(x, from, to) {
+  return from <= x && x <= to;
+}
+
 const TopBound = new Vector2d(0, -1);
 const LeftBound = new Vector2d(1, 0);
 const RightBound = new Vector2d(-1, 0);
@@ -82,7 +86,7 @@ class BallEntity extends Entity {
    */
   onCollision(response, other) {
     switch (response.b.body.collisionType) {
-      case collision.types.PLAYER_OBJECT:
+      case collision.types.PLAYER_OBJECT: {
         const vel = this.vel.clone();
         // direct Y up
         vel.y = -Math.abs(vel.y);
@@ -94,8 +98,21 @@ class BallEntity extends Entity {
         // clamp
         this.vel.setV(vel).normalize();
         return false;
-      case collision.types.ENEMY_OBJECT:
-        return true;
+      }
+      case collision.types.ENEMY_OBJECT: {
+        const { a, b, overlapV } = response;
+        const aBounds = a.getBounds();
+        const bBounds = b.getBounds();
+        if (within(aBounds.centerX, bBounds.left, bBounds.right)) {
+          this.vel.y = -this.vel.y;
+        } else if (within(aBounds.centerY, bBounds.top, bBounds.bottom)) {
+          this.vel.x = -this.vel.y;
+        } else {
+          this.vel.x = -this.vel.x;
+          this.vel.y = -this.vel.y;
+        }
+        return false;
+      }
       default:
         return false;
     }
