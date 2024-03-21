@@ -1,4 +1,4 @@
-import {collision, game, Text} from "melonjs";
+import { game, Text} from "melonjs";
 
 class Credits extends Text {
 

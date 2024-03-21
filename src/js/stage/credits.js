@@ -1,4 +1,4 @@
-import {game, Text, Stage, state, input} from "melonjs";
+import {game, Stage, state, input} from "melonjs";
 import Credits from "../renderables/credits/credits.js";
 
 class CreditsScreen extends Stage {

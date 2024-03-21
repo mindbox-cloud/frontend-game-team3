@@ -1,4 +1,4 @@
-import {audio, game, input, loader, Sprite, Stage, UITextButton} from "melonjs";
+import {game, loader, Sprite, Stage} from "melonjs";
 import PlayButton from "../renderables/menu/playButton.js";
 import CreditsButton from "../renderables/menu/creditsButton.js";
 

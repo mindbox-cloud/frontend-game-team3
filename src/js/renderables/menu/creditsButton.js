@@ -1,4 +1,4 @@
-import {game, state, UITextButton} from "melonjs";
+import {state, UITextButton} from "melonjs";
 
 class CreditsButton extends UITextButton {
     constructor(x,y, width, height) {
