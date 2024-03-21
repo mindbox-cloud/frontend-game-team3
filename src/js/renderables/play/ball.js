@@ -3,7 +3,6 @@ import {
   Ellipse,
   Entity,
   game,
-  input,
   loader,
   Math as MelonMath,
   Vector2d,
@@ -33,8 +32,7 @@ class BallEntity extends Entity {
     this.alwaysUpdate = false;
     this.body.collisionType = collision.types.PROJECTILE_OBJECT;
     this.speed = 4;
-    this.dx = this.speed;
-    this.dy = this.speed;
+    this.vel = new Vector2d(this.speed, this.speed).normalize().scale(this.speed);
     this.minX = 0; //image.width / 2;
     this.minY = 0; //image.height / 2;
     this.maxX = game.viewport.width - image.width;
@@ -48,36 +46,20 @@ class BallEntity extends Entity {
   update(dt) {
     super.update(dt);
 
-    this.pos.x += this.dx;
-    this.pos.y += this.dy;
-
-    if (this.pos.x < this.minX || this.pos.x > this.maxX) {
-      this.dx = -this.dx;
-    }
-    if (this.pos.y < this.minY) {
-      this.dy = -this.dy;
-    }
-    if (this.pos.y > this.maxY) {
-      this.ancestor.removeChild(this);
-    }
-
-    this.pos.x = Math.clamp(this.pos.x, this.minX, this.maxX);
-    this.pos.y = Math.clamp(this.pos.y, this.minY, this.maxY);
-
     const vel = this.vel.normalize().scale(this.speed);
-    this.pos.x += this.vel.x;
-    this.pos.y += this.vel.y;
+    this.pos.x += vel.x;
+    this.pos.y += vel.y;
 
     if (this.pos.x < this.minX) {
-      this.vel = reflectVector(this.vel, LeftBound);
+      this.vel = reflectVector(vel, LeftBound);
     }
     if (this.pos.x > this.maxX) {
-      this.vel = reflectVector(this.vel, RightBound);
+      this.vel = reflectVector(vel, RightBound);
     }
     if (this.pos.y < this.minY) {
       // increase difficulty
       this.speed += 0.1;
-      this.vel = reflectVector(this.vel, TopBound);
+      this.vel = reflectVector(vel, TopBound);
     }
     if (this.pos.y > this.maxY) {
       this.ancestor.removeChild(this);
