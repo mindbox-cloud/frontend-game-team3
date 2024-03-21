@@ -6,7 +6,7 @@ import {
   input,
   Sprite,
   loader,
-  audio,
+  audio, BitmapText, state,
 } from "melonjs";
 import Player from "../renderables/play/player.js";
 import BallEntity from "../renderables/play/ball.js";
@@ -17,7 +17,9 @@ class PlayScreen extends Stage {
   /**
    *  action to perform on state change
    */
-  onResetEvent() {
+  onResetEvent(force, levelId = 1) {
+    console.log('reset stage', levelId);
+
     // add a gray background to the default Stage
     let backgroundImage = new Sprite(
       game.viewport.width / 2,
@@ -32,9 +34,20 @@ class PlayScreen extends Stage {
     );
     game.world.addChild(backgroundImage, 1);
     game.world.addChild(new Player(300, game.viewport.height, {}));
-    game.world.addChild(new BallEntity(300, 300, {}));
+    game.world.addChild(new BallEntity(400, 500, {}));
 
-    generateLevel();
+    game.world.addChild(new BitmapText(0, 0,  {
+      font : "PressStart2P",
+      size : 1,
+      textBaseline : "top",
+      textAlign : "left",
+      text : `Level ${levelId}`
+    }));
+
+    const level = generateLevel(levelId);
+    if (level === 'WON') {
+      state.change(state.GAME_END, true);
+    }
 
     game.world.gravity = new Vector2d(0, 0);
 
@@ -50,6 +63,8 @@ class PlayScreen extends Stage {
   }
 
   onDestroyEvent() {
+    console.log('destroy');
+    game.world.reset();
     audio.stopTrack();
   }
 }

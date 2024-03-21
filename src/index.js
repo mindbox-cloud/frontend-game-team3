@@ -21,6 +21,7 @@ import BallEntity from "./js/renderables/play/ball";
 import BlockEntity from "./js/renderables/block";
 import GameOverScreen from "./js/stage/gameOver.js";
 import YouWonScreen from "./js/stage/youWon.js";
+import ReadyScreen from './js/stage/ready.js';
 
 device.onReady(() => {
   // initialize the display canvas once the device/browser is ready
@@ -52,6 +53,7 @@ device.onReady(() => {
   loader.preload(DataManifest, function () {
     // set the user defined game stages
     state.set(state.MENU, new TitleScreen());
+    state.set(state.READY, new ReadyScreen());
     state.set(state.PLAY, new PlayScreen());
     state.set(state.CREDITS, new CreditsScreen());
     state.set(state.GAMEOVER, new GameOverScreen());

@@ -1,13 +1,15 @@
 import { game } from "melonjs";
 import BlockEntity from "./renderables/block";
 import { BLOCK_SIZE, BRICK_KINDS } from "../constants/constants";
+import levels from '../data/map/levels.js';
 
-const GAP = 2;
+const GAP = 0;
 const TOP = BLOCK_SIZE[1];
 const LEFT = BLOCK_SIZE[0];
 
-export const generateLevel = () => {
-  game.viewport.width;
+export const generateLevel = (levelId) => {
+  const level = levels[levelId - 1];
+  if (!levels) return "END";
 
   let top = 0;
 
@@ -21,13 +23,17 @@ export const generateLevel = () => {
 
   const blocks = [];
   let id = 1;
-  for (let row = 1; row <= ROWS; row++) {
+  for (let row = 0; row < level.length; row = row + 1) {
     top += TOP;
-    for (let col = 1; col <= COLS; col++) {
+    for (let col = 0; col < level[row].length; col = col + 1) {
       left += LEFT;
-      blocks.push(
-        new BlockEntity(left, top, { id: ++id, color: BRICK_KINDS[row].color, hp: BRICK_KINDS[row].hp })
-      );
+      const blockId = level[row][col];
+      const block = BRICK_KINDS[blockId];
+      if (block.hp) {
+        blocks.push(
+            new BlockEntity(left, top, { id: ++id, color: block.color, hp: block.hp, required: block.required })
+        );
+      }
       if (col < COLS) left += GAP;
     }
 

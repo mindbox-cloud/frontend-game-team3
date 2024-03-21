@@ -14,7 +14,7 @@ class PlayButton extends UITextButton {
     }
 
     onClick(){
-        state.change(state.PLAY);
+        state.change(state.READY, true, true);
     }
 }
 
