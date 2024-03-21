@@ -11,12 +11,18 @@ class BallEntity extends Entity {
 
         super(x, y,  { width: image.width, height: image.height, image: image });
 
-        this.dx = 10;
-        this.dy = -10;
-        this.minX = image.width / 2;
-        this.minY = image.height / 2;
-        this.maxX = game.viewport.width - image.width / 2;
-        this.maxY = game.viewport.height - image.height / 2;
+        this.body.collisionType = collision.types.PROJECTILE_OBJECT;
+        this.body.setMaxVelocity(15, 15);
+        this.body.setFriction(0, 0);
+
+        this.body.vel.set(10,-10);
+
+        // this.dx = 10;
+        // this.dy = -10;
+        // this.minX = image.width / 2;
+        // this.minY = image.height / 2;
+        // this.maxX = game.viewport.width - image.width / 2;
+        // this.maxY = game.viewport.height + image.height;
     }
 
     /**
@@ -24,6 +30,12 @@ class BallEntity extends Entity {
      */
     update(dt) {
         super.update(dt);
+
+        // this.pos.x += this.dx;
+        // this.pos.y += this.dy;
+        //
+        // this.pos.x = Math.clamp(this.pos.x, this.minX, this.maxX);
+        // this.pos.y = Math.clamp(this.pos.y, this.minY, this.maxY);
 
         return true;
     }
@@ -33,14 +45,14 @@ class BallEntity extends Entity {
      * (called when colliding with other objects)
      */
     onCollision(response, other) {
-       if (response.b.body.collisionType === collision.types.PLAYER_OBJECT) {
-       } else if (response.b.body.collisionType === collision.types.ENEMY_OBJECT) {
-           // makes the other object solid, by substracting the overlap vector to the current position
-           this.pos.sub(response.overlapV);
-           this.hurt();
-           // not solid
-           return false;
-       }
+        switch (response.b.body.collisionType) {
+            case collision.types.PLAYER_OBJECT:
+                return true;
+            case collision.types.ENEMY_OBJECT:
+                return false;
+            case collision.types.WORLD_SHAPE:
+                return true;
+        }
         // Make all other objects solid
         return true;
     }

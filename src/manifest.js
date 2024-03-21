@@ -16,6 +16,7 @@ const DataManifest = [
     // sprites
     { name: "player", type: "image", src: "data/img/grey_button01.png" },
     { name: "ball", type: "image", src: "data/img/grey_circle.png" },
+    { name: "border", type: "image", src: "data/img/grey_button01.png"},
     { name: "ships", type: "image", src: "data/img/ships.png" }
 
 ];

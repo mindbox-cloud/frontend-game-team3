@@ -12,6 +12,7 @@ class PlayScreen extends Stage {
         game.world.addChild(new ColorLayer("background", "#202020"));
         game.world.addChild(new Player(0, 0, {}));
         game.world.addChild(new BallEntity(300, 300, {}));
+        game.world.addChild(new ScreenBoundsEntity());
 
         game.world.gravity = new Vector2d(0, 0);
     }
