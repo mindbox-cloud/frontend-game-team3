@@ -1,4 +1,4 @@
-import { collision, Entity, game, Rect, audio } from "melonjs";
+import { collision, Entity, game, Rect, audio, state } from "melonjs";
 import { BLOCK_SIZE } from "../../constants/constants";
 
 class BlockEntity extends Entity {
@@ -6,6 +6,7 @@ class BlockEntity extends Entity {
    * constructor
    */
   color = "red";
+  isAlive = true;
 
   constructor(x, y, { color, id }) {
     // call the parent constructor
@@ -45,6 +46,13 @@ class BlockEntity extends Entity {
     if (response.b.body.collisionType === collision.types.PROJECTILE_OBJECT) {
       audio.play("explosion", false, null, 0.4);
       game.world.removeChild(this);
+      this.isAlive = false;
+      const blocks = game.world.children.filter((child) =>
+        child.name.includes("enemy")
+      );
+
+      if (blocks.length === 0 || (blocks.length === 1 && !blocks[0].isAlive))
+        state.change(state.GAME_END, true);
       return false;
     }
     return false;
