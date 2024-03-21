@@ -17,6 +17,7 @@ import PlayerEntity from "./js/renderables/player.js";
 
 import DataManifest from "./manifest.js";
 import CreditsScreen from "./js/stage/credits.js";
+import BallEntity from './js/renderables/ball.js';
 
 
 device.onReady(() => {
@@ -50,6 +51,9 @@ device.onReady(() => {
 
         // add our player entity in the entity pool
         pool.register("mainPlayer", PlayerEntity);
+
+        // add our laser entity in the entity pool
+        pool.register("ball", BallEntity, true);
 
         // Start the game.
         state.change(state.MENU, true);

@@ -1,4 +1,4 @@
-import {Stage, game, ColorLayer, BitmapText, Body, Vector2d} from "melonjs";
+import {Stage, game, ColorLayer, BitmapText, Body, Vector2d, input} from "melonjs";
 import Player from '../renderables/player.js';
 import BallEntity from '../renderables/ball.js';
 import ScreenBoundsEntity from '../renderables/screenBounds.js';
@@ -10,11 +10,19 @@ class PlayScreen extends Stage {
     onResetEvent() {
         // add a gray background to the default Stage
         game.world.addChild(new ColorLayer("background", "#202020"));
-        game.world.addChild(new Player(0, 0, {}));
+        game.world.addChild(new Player(300, game.viewport.height, {}));
         game.world.addChild(new BallEntity(300, 300, {}));
-        game.world.addChild(new ScreenBoundsEntity());
+        // game.world.addChild(new ScreenBoundsEntity());
 
         game.world.gravity = new Vector2d(0, 0);
+
+        input.bindKey(input.KEY.LEFT, "left");
+        input.bindKey(input.KEY.RIGHT, "right");
+        input.bindKey(input.KEY.A, "left");
+        input.bindKey(input.KEY.D, "right");
+
+        input.bindKey(input.KEY.SPACE, "shoot", true);
+        input.bindKey(input.KEY.Z, "shoot", true);
     }
 }
 

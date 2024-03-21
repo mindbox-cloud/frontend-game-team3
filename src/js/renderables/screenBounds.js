@@ -8,26 +8,22 @@ class ScreenBoundsEntity extends Entity {
     constructor() {
         let image = loader.getImage("border");
 
-        super(10, 10, {
+        super(0, 0, {
             width: game.viewport.width,
-            height: 10,
+            height: game.viewport.height,
             image,
-            anchorPoint: new Vector2d( 0 , 0)
+            anchorPoint: new Vector2d( 0 , 0),
         });
 
         this.body.collisionType = collision.types.WORLD_SHAPE
-        // this.body.setMaxVelocity(0, 0);
-        // this.body.setFriction(0, 0);
-        // this.anchorPoint.set(1, 1);
-
-        // this.body.addShape(new Rect(0, 0, this.width, 10))
     }
 
     /**
      * update the entity
      */
     update(dt) {
-        super.update(dt);
+        // super.update(dt);
+        this.body.vel.set(0, 0);
         return true;
     }
 
@@ -36,6 +32,7 @@ class ScreenBoundsEntity extends Entity {
      * (called when colliding with other objects)
      */
     onCollision(response, other) {
+        if (response.b.name) console.log('collided with', response.b.name);
         return false;
     }
 };

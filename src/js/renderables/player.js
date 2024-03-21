@@ -1,35 +1,33 @@
-import {collision, Entity, game, input, loader, Math} from "melonjs";
+import {collision, Entity, game, input, pool, Math} from "melonjs";
+import {BALL_SIZE} from '../../constants/constants.js';
 
 class PlayerEntity extends Entity {
+    static _baseWidth = 200;
+    static _baseHeight = 32;
 
     /**
      * constructor
      */
     constructor(x, y, settings) {
-        // call the parent constructor
-        let image = loader.getImage("player");
-
         super(
-            game.viewport.width / 2 - image.width / 2,
-            game.viewport.height - image.height,
-            { width: image.width, height: image.height, image: image }
+            x,
+            y - PlayerEntity._baseHeight,
+            {
+                width: PlayerEntity._baseWidth,
+                height: PlayerEntity._baseHeight
+            }
         );
-
         this.body.collisionType = collision.types.PLAYER_OBJECT;
 
         // walking & jumping speed
         this.body.setMaxVelocity(5, 0);
         this.body.setFriction(0.4, 0);
 
-        input.bindKey(input.KEY.LEFT,  "left");
-        input.bindKey(input.KEY.RIGHT, "right");
-
-        input.bindKey(input.KEY.A,     "left");
-        input.bindKey(input.KEY.D,     "right");
-
         this.velx = 450;
-        this.maxX = game.viewport.width - image.width / 2;
-        this.minX = image.width / 2;
+        this.maxX = game.viewport.width - this.width;
+        this.minX = 0;
+
+        this.hasBall = true;
     }
 
     /**
@@ -46,13 +44,26 @@ class PlayerEntity extends Entity {
             this.pos.x += this.velx * dt / 1000;
         }
 
-        // if (input.isKeyPressed("shoot")) {
-        //     me.game.world.addChild(me.pool.pull("laser", this.getBounds().centerX - CONSTANTS.LASER.WIDTH / 2, this.getBounds().top));
-        // }
+        if (input.isKeyPressed("shoot")) {
+            if (this.hasBall) {
+                game.world.addChild(
+                    pool.pull("ball", this.getBounds().centerX - BALL_SIZE / 2, this.getBounds().top)
+                );
+                this.hasBall = false;
+            }
+        }
 
         this.pos.x = Math.clamp(this.pos.x, this.minX, this.maxX);
 
         return true;
+    }
+
+    draw(renderer, viewport) {
+        renderer.setColor('white')
+        renderer.fillRect(
+            0, 0,
+            this.width, this.height,
+        );
     }
 
    /**
@@ -60,8 +71,7 @@ class PlayerEntity extends Entity {
      * (called when colliding with other objects)
      */
     onCollision(response, other) {
-        // Make all other objects solid
-        return true;
+        return false;
     }
 };
 
