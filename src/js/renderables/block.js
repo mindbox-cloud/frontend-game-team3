@@ -43,7 +43,7 @@ class BlockEntity extends Entity {
    */
   onCollision(response, other) {
     if (response.b.body.collisionType === collision.types.PROJECTILE_OBJECT) {
-      audio.play("explosion");
+      audio.play("explosion", false, null, 0.4);
       game.world.removeChild(this);
       return false;
     }
