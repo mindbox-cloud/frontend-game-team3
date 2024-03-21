@@ -1,5 +1,5 @@
 import {collision, Entity, game, input, pool, Math} from "melonjs";
-import {BALL_SIZE} from '../../constants/constants.js';
+import {BALL_SIZE} from '../../../constants/constants.js';
 
 class PlayerEntity extends Entity {
     static _baseWidth = 200;
@@ -23,7 +23,7 @@ class PlayerEntity extends Entity {
         this.body.setMaxVelocity(5, 0);
         this.body.setFriction(0.4, 0);
 
-        this.velx = 450;
+        this.velx = 1000;
         this.maxX = game.viewport.width - this.width;
         this.minX = 0;
 

@@ -2,14 +2,11 @@ import {
   Stage,
   game,
   ColorLayer,
-  BitmapText,
-  Body,
   Vector2d,
   input,
 } from "melonjs";
-import Player from "../renderables/player.js";
-import BallEntity from "../renderables/ball.js";
-import ScreenBoundsEntity from "../renderables/screenBounds.js";
+import Player from "../renderables/play/player.js";
+import BallEntity from "../renderables/play/ball.js";
 import BlockEntity from "../renderables/block.js";
 
 class PlayScreen extends Stage {
@@ -21,7 +18,6 @@ class PlayScreen extends Stage {
     game.world.addChild(new ColorLayer("background", "#202020"));
     game.world.addChild(new Player(300, game.viewport.height, {}));
     game.world.addChild(new BallEntity(300, 300, {}));
-    // game.world.addChild(new ScreenBoundsEntity());
 
     game.world.addChild(new BlockEntity(100, 100, {}));
 

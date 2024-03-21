@@ -13,11 +13,11 @@ import "./index.css";
 
 import TitleScreen from "./js/stage/title.js";
 import PlayScreen from "./js/stage/play.js";
-import PlayerEntity from "./js/renderables/player.js";
+import PlayerEntity from "./js/renderables/play/player.js";
 
 import DataManifest from "./manifest.js";
 import CreditsScreen from "./js/stage/credits.js";
-import BallEntity from "./js/renderables/ball.js";
+import BallEntity from "./js/renderables/play/ball";
 import BlockEntity from "./js/renderables/block";
 
 device.onReady(() => {
@@ -59,7 +59,7 @@ device.onReady(() => {
     // add our laser entity in the entity pool
     pool.register("ball", BallEntity, true);
 
-    pool.register("ball", BlockEntity, true);
+    pool.register("block", BlockEntity, true);
 
     // Start the game.
     state.change(state.MENU, true);
