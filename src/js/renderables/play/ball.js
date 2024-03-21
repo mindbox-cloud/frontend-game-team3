@@ -42,6 +42,9 @@ class BallEntity extends Entity {
     this.maxX = game.viewport.width - image.width;
     this.maxY = game.viewport.height - image.height;
     this.name = "ball";
+
+    this.flipX = false;
+    this.flipY = false;
   }
 
   /**
@@ -51,9 +54,20 @@ class BallEntity extends Entity {
     super.update(dt);
 
     const vel = this.vel.normalize().scale(this.speed);
+
+    if (this.flipX) {
+      this.vel.x = -this.vel.x;
+      this.flipX = false;
+    }
+    if (this.flipY) {
+      this.vel.y = -this.vel.y;
+      this.flipY = false;
+    }
+    // update position
     this.pos.x += vel.x;
     this.pos.y += vel.y;
 
+    // collision with walls
     if (this.pos.x < this.minX) {
       this.vel = reflectVector(vel, LeftBound);
     }
@@ -65,15 +79,32 @@ class BallEntity extends Entity {
       this.speed += 0.1;
       this.vel = reflectVector(vel, TopBound);
     }
+    // fell off(
     if (this.pos.y > this.maxY) {
       state.change(state.GAMEOVER, true);
       return true;
     }
-
+    
+    // clamp position
     this.pos.x = MelonMath.clamp(this.pos.x, this.minX, this.maxX);
     this.pos.y = MelonMath.clamp(this.pos.y, this.minY, this.maxY);
 
     return true;
+  }
+
+  _shouldFlip(b) {
+    let flipX = false;
+    let flipY = false;
+    const aBounds = this.getBounds();
+    const bBounds = b.getBounds();
+    if (within(aBounds.centerX, bBounds.left, bBounds.right)) {
+      return { y: true };
+    } else if (within(aBounds.centerY, bBounds.top, bBounds.bottom)) {
+      return { x: true };
+    } else {
+      return { x: true, y: true };
+    }
+
   }
 
   draw(renderer, viewport) {
@@ -107,12 +138,12 @@ class BallEntity extends Entity {
         const aBounds = a.getBounds();
         const bBounds = b.getBounds();
         if (within(aBounds.centerX, bBounds.left, bBounds.right)) {
-          this.vel.y = -this.vel.y;
+          this.flipY = true;
         } else if (within(aBounds.centerY, bBounds.top, bBounds.bottom)) {
-          this.vel.x = -this.vel.y;
+          this.flipX = true;
         } else {
-          this.vel.x = -this.vel.x;
-          this.vel.y = -this.vel.y;
+          this.flipX = true;
+          this.flipY = true;
         }
         return false;
       }
