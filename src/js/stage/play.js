@@ -36,7 +36,7 @@ class PlayScreen extends Stage {
     input.bindKey(input.KEY.SPACE, "shoot", true);
     input.bindKey(input.KEY.Z, "shoot", true);
 
-    audio.playTrack("game_music");
+    audio.playTrack("game_music", 0.5);
   }
 
   onDestroyEvent() {

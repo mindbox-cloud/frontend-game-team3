@@ -31,7 +31,7 @@ class GameOverScreen extends Stage {
             }
         ), 2);
         input.bindKey(input.KEY.ESC,     "back");
-        audio.play('game_over');
+        audio.play('game_over', false, null, 0.14);
     }
 
     update(dt) {
