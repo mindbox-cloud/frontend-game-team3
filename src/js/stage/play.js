@@ -3,7 +3,10 @@ import {
   game,
   ColorLayer,
   Vector2d,
-  input, Sprite, loader, audio,
+  input,
+  Sprite,
+  loader,
+  audio,
 } from "melonjs";
 import Player from "../renderables/play/player.js";
 import BallEntity from "../renderables/play/ball.js";
@@ -16,10 +19,17 @@ class PlayScreen extends Stage {
    */
   onResetEvent() {
     // add a gray background to the default Stage
-    let backgroundImage = new Sprite(game.viewport.width / 2, game.viewport.height / 2, {
-      image: loader.getImage('game_bg'),
-    });
-    backgroundImage.scale(game.viewport.width / backgroundImage.width, game.viewport.height / backgroundImage.height);
+    let backgroundImage = new Sprite(
+      game.viewport.width / 2,
+      game.viewport.height / 2,
+      {
+        image: loader.getImage("game_bg"),
+      }
+    );
+    backgroundImage.scale(
+      game.viewport.width / backgroundImage.width,
+      game.viewport.height / backgroundImage.height
+    );
     game.world.addChild(backgroundImage, 1);
     game.world.addChild(new Player(300, game.viewport.height, {}));
     game.world.addChild(new BallEntity(300, 300, {}));
@@ -36,7 +46,7 @@ class PlayScreen extends Stage {
     input.bindKey(input.KEY.SPACE, "shoot", true);
     input.bindKey(input.KEY.Z, "shoot", true);
 
-    audio.playTrack("game_music", 0.5);
+    audio.playTrack("game_music", 0.05);
   }
 
   onDestroyEvent() {
