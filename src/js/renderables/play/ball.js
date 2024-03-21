@@ -35,7 +35,7 @@ class BallEntity extends Entity {
 
     this.alwaysUpdate = false;
     this.body.collisionType = collision.types.PROJECTILE_OBJECT;
-    this.speed = 4;
+    this.speed = 8;
     this.vel = new Vector2d(this.speed, this.speed).normalize().scale(this.speed);
     this.minX = 0; //image.width / 2;
     this.minY = 0; //image.height / 2;
