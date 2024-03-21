@@ -22,6 +22,7 @@ const DataManifest = [
     { name: 'game_bg', type: 'image', src: 'data/img/game_bg.png'},
     { name: "game_music", type: "audio", src: "./data/bgm/", channel : 1},
     { name: "menu_music", type: "audio", src: "./data/bgm/", channel : 1},
+    { name: "game_over", type: "audio", src: "./data/sfx/", channel : 2},
 ];
 
 export default DataManifest;

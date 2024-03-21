@@ -19,6 +19,7 @@ import DataManifest from "./manifest.js";
 import CreditsScreen from "./js/stage/credits.js";
 import BallEntity from "./js/renderables/play/ball";
 import BlockEntity from "./js/renderables/block";
+import GameOverScreen from "./js/stage/gameOver.js";
 
 device.onReady(() => {
   // initialize the display canvas once the device/browser is ready
@@ -52,6 +53,7 @@ device.onReady(() => {
     state.set(state.MENU, new TitleScreen());
     state.set(state.PLAY, new PlayScreen());
     state.set(state.CREDITS, new CreditsScreen());
+    state.set(state.GAMEOVER, new GameOverScreen());
 
     // add our player entity in the entity pool
     pool.register("mainPlayer", PlayerEntity);

@@ -4,7 +4,7 @@ import {
   Entity,
   game,
   loader,
-  Math as MelonMath,
+  Math as MelonMath, state,
   Vector2d,
 } from "melonjs";
 import { BALL_SIZE, COLORS } from "../../../constants/constants.js";
@@ -40,7 +40,7 @@ class BallEntity extends Entity {
     this.minX = 0; //image.width / 2;
     this.minY = 0; //image.height / 2;
     this.maxX = game.viewport.width - image.width;
-    this.maxY = game.viewport.height + image.height;
+    this.maxY = game.viewport.height - image.height;
     this.name = "ball";
   }
 
@@ -66,7 +66,8 @@ class BallEntity extends Entity {
       this.vel = reflectVector(vel, TopBound);
     }
     if (this.pos.y > this.maxY) {
-      this.ancestor.removeChild(this);
+      state.change(state.GAMEOVER, true);
+      return true;
     }
 
     this.pos.x = MelonMath.clamp(this.pos.x, this.minX, this.maxX);
