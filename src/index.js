@@ -16,6 +16,7 @@ import PlayScreen from "./js/stage/play.js";
 import PlayerEntity from "./js/renderables/player.js";
 
 import DataManifest from "./manifest.js";
+import CreditsScreen from "./js/stage/credits.js";
 
 
 device.onReady(() => {
@@ -45,11 +46,12 @@ device.onReady(() => {
         // set the user defined game stages
         state.set(state.MENU, new TitleScreen());
         state.set(state.PLAY, new PlayScreen());
+        state.set(state.CREDITS, new CreditsScreen());
 
         // add our player entity in the entity pool
         pool.register("mainPlayer", PlayerEntity);
 
         // Start the game.
-        state.change(state.PLAY, true);
+        state.change(state.MENU, true);
     });
 });

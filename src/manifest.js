@@ -17,7 +17,8 @@ const DataManifest = [
     { name: "player", type: "image", src: "data/img/grey_button01.png" },
     { name: "ball", type: "image", src: "data/img/grey_circle.png" },
     { name: "border", type: "image", src: "data/img/grey_button01.png"},
-    { name: "ships", type: "image", src: "data/img/ships.png" }
+    { name: "ships", type: "image", src: "data/img/ships.png" },
+    { name: 'title_background', type: "image", src: "data/img/pxfuel.jpg"},
 
 ];
 
