@@ -95,8 +95,10 @@ class BallEntity extends Entity {
         const ax = response.a.pos.x + response.a.width / 2;
         const bx = response.b.pos.x + response.b.width / 2;
         const hitPosition = (ax - bx) / response.b.width;
-        vel.x = this.speed * hitPosition * 4;
+        vel.x = this.speed * hitPosition * 2;
         // clamp
+        this.vel.setV(vel).normalize();
+        if (Math.abs(vel.y) < 0.2) vel.y = -0.5;
         this.vel.setV(vel).normalize();
         return false;
       }

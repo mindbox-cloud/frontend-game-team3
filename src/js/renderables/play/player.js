@@ -1,5 +1,5 @@
-import {collision, Entity, game, input, pool, Math} from "melonjs";
-import {BALL_SIZE} from '../../../constants/constants.js';
+import {collision, Entity, game, input, pool, Math, Ellipse} from "melonjs";
+import {BALL_SIZE, COLORS} from '../../../constants/constants.js';
 
 class PlayerEntity extends Entity {
     static _baseWidth = 200;
@@ -14,7 +14,7 @@ class PlayerEntity extends Entity {
             y - PlayerEntity._baseHeight,
             {
                 width: PlayerEntity._baseWidth,
-                height: PlayerEntity._baseHeight
+                height: PlayerEntity._baseHeight,
             }
         );
         this.body.collisionType = collision.types.PLAYER_OBJECT;
@@ -59,11 +59,8 @@ class PlayerEntity extends Entity {
     }
 
     draw(renderer, viewport) {
-        renderer.setColor('white')
-        renderer.fillRect(
-            0, 0,
-            this.width, this.height,
-        );
+        renderer.setColor(COLORS[14]);
+        renderer.fill(this.body.shapes[0]);
     }
 
    /**
