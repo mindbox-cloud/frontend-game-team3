@@ -18,7 +18,7 @@ const DataManifest = [
   { name: "border", type: "image", src: "data/img/grey_button01.png" },
   { name: "ships", type: "image", src: "data/img/ships.png" },
   { name: "title_background", type: "image", src: "data/img/pxfuel.jpg" },
-  { name: "game_bg", type: "image", src: "data/img/game_bg.png" },
+  { name: "game_bg", type: "image", src: "data/img/game_bg.jpg" },
   { name: "win", type: "image", src: "data/img/win.jpg" },
   { name: "game_music", type: "audio", src: "./data/bgm/", channel: 1 },
   { name: "menu_music", type: "audio", src: "./data/bgm/", channel: 1 },
