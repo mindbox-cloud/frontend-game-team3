@@ -26,7 +26,7 @@ class BallEntity extends Entity {
         this.alwaysUpdate = false
         this.body.collisionType = collision.types.PROJECTILE_OBJECT;
         this.speed = 4;
-        this.vel = new Vector2d(this.speed, this.speed).normalize().scale(this.speed);
+        this.vel = new Vector2d(this.speed, this.speed).normalize();
         this.minX = 0;
         this.minY = 0;
         this.maxX = game.viewport.width - image.width;
@@ -40,6 +40,7 @@ class BallEntity extends Entity {
     update(dt) {
         super.update(dt);
 
+        const vel = this.vel.normalize().scale(this.speed);
         this.pos.x += this.vel.x;
         this.pos.y += this.vel.y;
 
@@ -50,6 +51,8 @@ class BallEntity extends Entity {
             this.vel = reflectVector(this.vel, RightBound);
         }
         if (this.pos.y < this.minY) {
+            // increase difficulty
+            this.speed += 0.1;
             this.vel = reflectVector(this.vel, TopBound);
         }
         if (this.pos.y > this.maxY) {
@@ -83,7 +86,7 @@ class BallEntity extends Entity {
                 const hitPosition = (ax - bx) / response.b.width;
                 vel.x = this.speed * hitPosition * 4;
                 // clamp
-                this.vel.setV(vel);
+                this.vel.setV(vel).normalize();
                 return false;
             case collision.types.ENEMY_OBJECT:
                 return true;
