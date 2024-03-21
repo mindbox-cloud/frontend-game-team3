@@ -1,4 +1,4 @@
-import {game, loader, Sprite, Stage} from "melonjs";
+import {audio, game, loader, Sprite, Stage, Text} from "melonjs";
 import PlayButton from "../renderables/menu/playButton.js";
 import CreditsButton from "../renderables/menu/creditsButton.js";
 
@@ -16,6 +16,19 @@ class TitleScreen extends Stage {
         backgroundImage.scale(game.viewport.width / backgroundImage.width, game.viewport.height / backgroundImage.height);
         game.world.addChild(backgroundImage, 1);
 
+        game.world.addChild(new Text(
+            game.viewport.width / 2,
+            game.viewport.height / 2 - 100,
+            {
+                font: 'PressStart2P',
+                weight: 'bold',
+                size: 46,
+                text: 'Brick Breaker',
+                fillStyle: '#eae9e9',
+                textAlign: 'center',
+            }
+        ));
+
         game.world.addChild(new PlayButton(
             game.viewport.width / 2 - 100,
             game.viewport.height / 2 - 20,
@@ -29,13 +42,15 @@ class TitleScreen extends Stage {
             200,
             40
         ), 2);
+
+        audio.playTrack("menu_music");
     }
 
     /**
      *  action to perform when leaving this screen (state change)
      */
     onDestroyEvent() {
-        ; // TODO
+        audio.stopTrack();
     }
 };
 
